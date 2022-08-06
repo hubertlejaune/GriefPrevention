@@ -56,7 +56,8 @@ class AutoExtendClaimTask implements Runnable
                                 // Naturally generated Lootables only have a loot table reference until the container is
                                 // accessed. On access the loot table is used to calculate the contents and removed.
                                 // This prevents claims from always extending over unexplored structures, spawners, etc.
-                                .filter(tile -> tile instanceof Lootable lootable && lootable.getLootTable() == null)
+                                .filter(tile -> tile instanceof Lootable)
+                                .filter(lootable -> ((Lootable)lootable).getLootTable() == null)
                                 // Return smallest value or default to existing min Y if no eligible tiles are present.
                                 .mapToInt(BlockState::getY).min().orElse(lowestLootableTile));
                     }
@@ -178,8 +179,17 @@ class AutoExtendClaimTask implements Runnable
     }
 
     //runs in the main execution thread, where it can safely change claims and save those changes
-    private record ExecuteExtendClaimTask(Claim claim, int newY) implements Runnable
+    private final class ExecuteExtendClaimTask implements Runnable
     {
+    	private final Claim claim;
+    	private final int newY;
+    	public ExecuteExtendClaimTask(Claim claim, int newY)
+    	{
+    		this.claim = claim;
+    		this.newY = newY;
+    	}
+    	public Claim claim() { return claim; }
+    	public int newY() { return newY; }
         @Override
         public void run()
         {

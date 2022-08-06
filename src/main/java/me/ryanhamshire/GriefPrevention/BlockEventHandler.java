@@ -110,8 +110,8 @@ public class BlockEventHandler implements Listener
         this.trashBlocks.add(Material.SAND);
         this.trashBlocks.add(Material.TNT);
         this.trashBlocks.add(Material.CRAFTING_TABLE);
-        this.trashBlocks.add(Material.TUFF);
-        this.trashBlocks.add(Material.COBBLED_DEEPSLATE);
+        //this.trashBlocks.add(Material.TUFF);
+        //this.trashBlocks.add(Material.COBBLED_DEEPSLATE);
     }
 
     //when a player breaks a block...
@@ -746,8 +746,9 @@ public class BlockEventHandler implements Listener
         {
             // Flammable lightable blocks do not fire EntityChangeBlockEvent when igniting.
             BlockData blockData = igniteEvent.getBlock().getBlockData();
-            if (blockData instanceof Lightable lightable)
+            if (blockData instanceof Lightable)
             {
+            	Lightable lightable = (Lightable) blockData;
                 // Set lit for resulting data in event. Currently unused, but may be in the future.
                 lightable.setLit(true);
 
@@ -1099,8 +1100,9 @@ public class BlockEventHandler implements Listener
             Claim claim = this.dataStore.getClaimAt(blockState.getLocation(), false, null);
             if (claim != null)
             {
-                if (event.getEntity() instanceof Player player)
+                if (event.getEntity() instanceof Player)
                 {
+                	Player player = (Player) event.getEntity();
                     Supplier<String> noPortalReason = claim.checkPermission(player, ClaimPermission.Build, event);
 
                     if (noPortalReason != null)

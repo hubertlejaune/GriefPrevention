@@ -41,17 +41,24 @@ public class FakeBlockVisualization extends BlockBoundaryVisualization
     @Override
     protected @NotNull Consumer<@NotNull IntVector> addCornerElements(@NotNull Boundary boundary)
     {
-        return addBlockElement(switch (boundary.type())
+    	BlockData bd = Material.GLOWSTONE.createBlockData();
+        switch (boundary.type())
         {
-            case SUBDIVISION -> Material.IRON_BLOCK.createBlockData();
-            case INITIALIZE_ZONE, NATURE_RESTORATION_ZONE -> Material.DIAMOND_BLOCK.createBlockData();
-            case CONFLICT_ZONE -> {
-                BlockData fakeData = Material.REDSTONE_ORE.createBlockData();
-                ((Lightable) fakeData).setLit(true);
-                yield fakeData;
-            }
-            default -> Material.GLOWSTONE.createBlockData();
-        });
+            case SUBDIVISION:
+            	bd = Material.IRON_BLOCK.createBlockData();
+            	break;
+            case INITIALIZE_ZONE:
+            case NATURE_RESTORATION_ZONE:
+            	Material.DIAMOND_BLOCK.createBlockData();
+            	break;
+            case CONFLICT_ZONE:
+                bd = Material.REDSTONE_ORE.createBlockData();
+                ((Lightable) bd).setLit(true);
+                break;
+            default:
+            	break;
+        }
+        return addBlockElement(bd);
     }
 
 
@@ -59,14 +66,27 @@ public class FakeBlockVisualization extends BlockBoundaryVisualization
     protected @NotNull Consumer<@NotNull IntVector> addSideElements(@NotNull Boundary boundary)
     {
         // Determine BlockData from boundary type to cache for reuse in function.
-        return addBlockElement(switch (boundary.type())
+        BlockData bd = Material.GOLD_BLOCK.createBlockData();
+        
+        switch (boundary.type())
         {
-            case ADMIN_CLAIM -> Material.PUMPKIN.createBlockData();
-            case SUBDIVISION -> Material.WHITE_WOOL.createBlockData();
-            case INITIALIZE_ZONE, NATURE_RESTORATION_ZONE -> Material.DIAMOND_BLOCK.createBlockData();
-            case CONFLICT_ZONE -> Material.NETHERRACK.createBlockData();
-            default -> Material.GOLD_BLOCK.createBlockData();
-        });
+            case ADMIN_CLAIM:
+            	bd = Material.PUMPKIN.createBlockData();
+            	break;
+            case SUBDIVISION:
+            	bd = Material.WHITE_WOOL.createBlockData();
+            	break;
+            case INITIALIZE_ZONE:
+            case NATURE_RESTORATION_ZONE:
+            	bd = Material.DIAMOND_BLOCK.createBlockData();
+            	break;
+            case CONFLICT_ZONE:
+            	bd = Material.NETHERRACK.createBlockData();
+            	break;
+            default:
+            	break;
+        }
+        return addBlockElement(bd);
     }
 
     /**

@@ -1693,6 +1693,16 @@ class PlayerEventHandler implements Listener
             }
             return;
         }
+        
+        boolean isAccessTrusts = false;
+        boolean isContainerTrusts = false;
+        
+        if(clickedBlock != null)
+        {
+            MaterialInfo materialInfo = new MaterialInfo(clickedBlock.getType(), clickedBlock.getData(), null);
+        	isAccessTrusts = instance.config_mods_accessTrustIds.Contains(materialInfo);
+        	isContainerTrusts = instance.config_mods_containerTrustIds.Contains(materialInfo);
+        }
 
         //don't care about left-clicking on most blocks, this is probably a break action
         if (action == Action.LEFT_CLICK_BLOCK && clickedBlock != null)
@@ -1722,14 +1732,14 @@ class PlayerEventHandler implements Listener
             }
 
             //exception for blocks on a specific watch list
-            if (!this.onLeftClickWatchList(clickedBlockType))
+            if (!this.onLeftClickWatchList(clickedBlockType) && !isAccessTrusts && !isContainerTrusts)
             {
                 return;
             }
         }
 
         //apply rules for containers and crafting blocks
-        if (clickedBlock != null && instance.config_claims_preventTheft && (
+    	if (clickedBlock != null && instance.config_claims_preventTheft && (
                 event.getAction() == Action.RIGHT_CLICK_BLOCK && (
                         (this.isInventoryHolder(clickedBlock) && clickedBlock.getType() != Material.LECTERN) ||
                                 clickedBlockType == Material.ANVIL ||
@@ -1740,10 +1750,10 @@ class PlayerEventHandler implements Listener
                                 clickedBlockType == Material.CAKE ||
                                 clickedBlockType == Material.CARTOGRAPHY_TABLE ||
                                 clickedBlockType == Material.CAULDRON ||
-                                clickedBlockType == Material.WATER_CAULDRON ||
-                                clickedBlockType == Material.LAVA_CAULDRON ||
-                                clickedBlockType == Material.CAVE_VINES ||
-                                clickedBlockType == Material.CAVE_VINES_PLANT ||
+                                //clickedBlockType == Material.WATER_CAULDRON ||
+                                //clickedBlockType == Material.LAVA_CAULDRON ||
+                                //clickedBlockType == Material.CAVE_VINES ||
+                                //clickedBlockType == Material.CAVE_VINES_PLANT ||
                                 clickedBlockType == Material.CHIPPED_ANVIL ||
                                 clickedBlockType == Material.DAMAGED_ANVIL ||
                                 clickedBlockType == Material.GRINDSTONE ||
@@ -1751,10 +1761,11 @@ class PlayerEventHandler implements Listener
                                 clickedBlockType == Material.LOOM ||
                                 clickedBlockType == Material.PUMPKIN ||
                                 clickedBlockType == Material.RESPAWN_ANCHOR ||
-                                clickedBlockType == Material.ROOTED_DIRT ||
+                                //clickedBlockType == Material.ROOTED_DIRT ||
                                 clickedBlockType == Material.STONECUTTER ||
                                 clickedBlockType == Material.SWEET_BERRY_BUSH
-                        )))
+                        )
+                ) || isContainerTrusts)
         {
             if (playerData == null) playerData = this.dataStore.getPlayerData(player.getUniqueId());
 
@@ -1797,7 +1808,6 @@ class PlayerEventHandler implements Listener
                 GriefPrevention.sendMessage(player, TextMode.Warn, Messages.PvPImmunityEnd);
             }
         }
-
         //otherwise apply rules for doors and beds, if configured that way
         else if (clickedBlock != null &&
 
@@ -1809,7 +1819,9 @@ class PlayerEventHandler implements Listener
 
                 instance.config_claims_lecternReadingRequiresAccessTrust && clickedBlockType == Material.LECTERN ||
 
-                instance.config_claims_lockFenceGates && Tag.FENCE_GATES.isTagged(clickedBlockType)))
+                instance.config_claims_lockFenceGates && Tag.FENCE_GATES.isTagged(clickedBlockType) ||
+                
+                isAccessTrusts))
         {
             if (playerData == null) playerData = this.dataStore.getPlayerData(player.getUniqueId());
             Claim claim = this.dataStore.getClaimAt(clickedBlock.getLocation(), false, playerData.lastClaim);
@@ -1847,7 +1859,7 @@ class PlayerEventHandler implements Listener
         }
 
         //otherwise apply rule for cake
-        else if (clickedBlock != null && instance.config_claims_preventTheft && (clickedBlockType == Material.CAKE || Tag.CANDLE_CAKES.isTagged(clickedBlockType)))
+        else if (clickedBlock != null && instance.config_claims_preventTheft && (clickedBlockType == Material.CAKE /*|| Tag.CANDLE_CAKES.isTagged(clickedBlockType)*/))
         {
             if (playerData == null) playerData = this.dataStore.getPlayerData(player.getUniqueId());
             Claim claim = this.dataStore.getClaimAt(clickedBlock.getLocation(), false, playerData.lastClaim);
@@ -1874,8 +1886,8 @@ class PlayerEventHandler implements Listener
                                 clickedBlockType == Material.DAYLIGHT_DETECTOR ||
                                 clickedBlockType == Material.COMPARATOR ||
                                 clickedBlockType == Material.REDSTONE_WIRE ||
-                                Tag.FLOWER_POTS.isTagged(clickedBlockType) ||
-                                Tag.CANDLES.isTagged(clickedBlockType)
+                                Tag.FLOWER_POTS.isTagged(clickedBlockType)// ||
+                                //Tag.CANDLES.isTagged(clickedBlockType)
                 ))
         {
             if (playerData == null) playerData = this.dataStore.getPlayerData(player.getUniqueId());
@@ -1923,7 +1935,7 @@ class PlayerEventHandler implements Listener
                     || materialInHand == Material.END_CRYSTAL
                     || materialInHand == Material.FLINT_AND_STEEL
                     || materialInHand == Material.INK_SAC
-                    || materialInHand == Material.GLOW_INK_SAC
+                    //|| materialInHand == Material.GLOW_INK_SAC
                     || dyes.contains(materialInHand)))
             {
                 String noBuildReason = instance
@@ -1986,7 +1998,7 @@ class PlayerEventHandler implements Listener
                     materialInHand == Material.TNT_MINECART ||
                     materialInHand == Material.ARMOR_STAND ||
                     materialInHand == Material.ITEM_FRAME ||
-                    materialInHand == Material.GLOW_ITEM_FRAME ||
+                    //materialInHand == Material.GLOW_ITEM_FRAME ||
                     spawn_eggs.contains(materialInHand) ||
                     materialInHand == Material.INFESTED_STONE ||
                     materialInHand == Material.INFESTED_COBBLESTONE ||

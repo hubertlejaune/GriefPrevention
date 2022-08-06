@@ -678,10 +678,10 @@ class RestoreNatureProcessingTask implements Runnable
         playerBlocks.addAll(Tag.BEDS.getValues());
         playerBlocks.addAll(Tag.BUTTONS.getValues());
         playerBlocks.addAll(Tag.CAMPFIRES.getValues());
-        playerBlocks.addAll(Tag.CANDLE_CAKES.getValues());
-        playerBlocks.addAll(Tag.CANDLES.getValues());
+        //playerBlocks.addAll(Tag.CANDLE_CAKES.getValues());
+        //playerBlocks.addAll(Tag.CANDLES.getValues());
         playerBlocks.addAll(Tag.CARPETS.getValues());
-        playerBlocks.addAll(Tag.CAULDRONS.getValues());
+        //playerBlocks.addAll(Tag.CAULDRONS.getValues());
         playerBlocks.addAll(Tag.DOORS.getValues());
         playerBlocks.addAll(Tag.FENCE_GATES.getValues());
         playerBlocks.addAll(Tag.FENCES.getValues());
@@ -787,22 +787,22 @@ class RestoreNatureProcessingTask implements Runnable
         playerBlocks.add(Material.POLISHED_DIORITE);
         playerBlocks.add(Material.POLISHED_GRANITE);
         playerBlocks.add(Material.POLISHED_BASALT);
-        playerBlocks.add(Material.POLISHED_DEEPSLATE);
-        playerBlocks.add(Material.DEEPSLATE_BRICKS);
-        playerBlocks.add(Material.CRACKED_DEEPSLATE_BRICKS);
-        playerBlocks.add(Material.DEEPSLATE_TILES);
-        playerBlocks.add(Material.CRACKED_DEEPSLATE_TILES);
-        playerBlocks.add(Material.CHISELED_DEEPSLATE);
-        playerBlocks.add(Material.RAW_COPPER_BLOCK);
-        playerBlocks.add(Material.RAW_IRON_BLOCK);
-        playerBlocks.add(Material.RAW_GOLD_BLOCK);
-        playerBlocks.add(Material.LIGHTNING_ROD);
+        //playerBlocks.add(Material.POLISHED_DEEPSLATE);
+        //playerBlocks.add(Material.DEEPSLATE_BRICKS);
+        //playerBlocks.add(Material.CRACKED_DEEPSLATE_BRICKS);
+        //playerBlocks.add(Material.DEEPSLATE_TILES);
+        //playerBlocks.add(Material.CRACKED_DEEPSLATE_TILES);
+        //playerBlocks.add(Material.CHISELED_DEEPSLATE);
+        //playerBlocks.add(Material.RAW_COPPER_BLOCK);
+        //playerBlocks.add(Material.RAW_IRON_BLOCK);
+        //playerBlocks.add(Material.RAW_GOLD_BLOCK);
+        //playerBlocks.add(Material.LIGHTNING_ROD);
 
         //these are unnatural in the nether and end
         if (environment != Environment.NORMAL && environment != Environment.CUSTOM)
         {
-            playerBlocks.addAll(Tag.BASE_STONE_OVERWORLD.getValues());
-            playerBlocks.addAll(Tag.DIRT.getValues());
+            //playerBlocks.addAll(Tag.BASE_STONE_OVERWORLD.getValues());
+            //playerBlocks.addAll(Tag.DIRT.getValues());
             playerBlocks.addAll(Tag.SAND.getValues());
         }
 
@@ -811,7 +811,7 @@ class RestoreNatureProcessingTask implements Runnable
         {
             playerBlocks.addAll(Tag.NYLIUM.getValues());
             playerBlocks.addAll(Tag.WART_BLOCKS.getValues());
-            playerBlocks.addAll(Tag.BASE_STONE_NETHER.getValues());
+            //playerBlocks.addAll(Tag.BASE_STONE_NETHER.getValues());
             playerBlocks.add(Material.POLISHED_BLACKSTONE);
             playerBlocks.add(Material.CHISELED_POLISHED_BLACKSTONE);
             playerBlocks.add(Material.CRACKED_POLISHED_BLACKSTONE_BRICKS);

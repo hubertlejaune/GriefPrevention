@@ -268,18 +268,32 @@ public abstract class BoundaryVisualization
         {
             GriefPrevention.instance.getServer().getScheduler().scheduleSyncDelayedTask(
                     GriefPrevention.instance,
-                    new DelayedVisualizationTask(visualization, playerData, event),
+                    visualization.new DelayedVisualizationTask(visualization, playerData, event),
                     1L);
         }
     }
 
-    private record DelayedVisualizationTask(
-            @NotNull BoundaryVisualization visualization,
-            @NotNull PlayerData playerData,
-            @NotNull BoundaryVisualizationEvent event)
+    private final class DelayedVisualizationTask
             implements Runnable
     {
-
+    	private final @NotNull BoundaryVisualization visualization;
+    	private final @NotNull PlayerData playerData;
+    	private final @NotNull BoundaryVisualizationEvent event;
+    	
+    	public DelayedVisualizationTask(
+                @NotNull BoundaryVisualization visualization,
+                @NotNull PlayerData playerData,
+                @NotNull BoundaryVisualizationEvent event)
+    	{
+    		this.visualization = visualization;
+    		this.playerData = playerData;
+    		this.event = event;
+    	}
+    	
+    	public @NotNull BoundaryVisualization visualization() { return visualization; }
+    	public @NotNull PlayerData playerData() { return playerData; }
+    	public @NotNull BoundaryVisualizationEvent event() { return event; }
+    	
         @Override
         public void run()
         {

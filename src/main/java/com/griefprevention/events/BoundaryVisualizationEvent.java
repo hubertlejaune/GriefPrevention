@@ -4,7 +4,7 @@ import com.griefprevention.util.IntVector;
 import com.griefprevention.visualization.Boundary;
 import com.griefprevention.visualization.BoundaryVisualization;
 import com.griefprevention.visualization.VisualizationProvider;
-import com.griefprevention.visualization.impl.AntiCheatCompatVisualization;
+//import com.griefprevention.visualization.impl.AntiCheatCompatVisualization;
 import com.griefprevention.visualization.impl.FakeBlockVisualization;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
 import org.bukkit.entity.Player;
@@ -23,10 +23,12 @@ public class BoundaryVisualizationEvent extends PlayerEvent
 
     public static final VisualizationProvider DEFAULT_PROVIDER = (world, visualizeFrom, height) ->
     {
+    	/*
         if (GriefPrevention.instance.config_visualizationAntiCheatCompat)
         {
             return new AntiCheatCompatVisualization(world, visualizeFrom, height);
         }
+        */
         return new FakeBlockVisualization(world, visualizeFrom, height);
     };
 

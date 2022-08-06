@@ -12,9 +12,20 @@ import org.jetbrains.annotations.Nullable;
 /**
  * An immutable integer-based vector.
  */
-public record IntVector(int x, int y, int z)
+public final class IntVector
 {
-
+	private final int x;
+	private final int y;
+	private final int z;
+	
+	public IntVector(int x, int y, int z) {
+		this.x=x;
+		this.y=y;
+		this.z=z;
+	}
+	public int x() { return x;}
+	public int y() { return y;}
+	public int z() { return z;}
     /**
      * Construct a new {@code IntVector} representing the specified {@link Block}.
      *
